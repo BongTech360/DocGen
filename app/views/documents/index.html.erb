@@ -1,0 +1,45 @@
+<div class="documents-index">
+  <div class="header">
+    <h1>Documents</h1>
+    <%= link_to "New Document", new_document_path, class: "btn btn-primary" %>
+  </div>
+
+  <div class="filters">
+    <%= link_to "All", documents_path, class: params[:type].blank? ? "active" : "" %>
+    <%= link_to "Visas", documents_path(type: "visa"), class: params[:type] == "visa" ? "active" : "" %>
+    <%= link_to "Bank Documents", documents_path(type: "bank_document"), class: params[:type] == "bank_document" ? "active" : "" %>
+    <%= link_to "Agreements", documents_path(type: "agreement"), class: params[:type] == "agreement" ? "active" : "" %>
+    <%= link_to "Invoices", documents_path(type: "invoice"), class: params[:type] == "invoice" ? "active" : "" %>
+  </div>
+
+  <table class="documents-table">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Type</th>
+        <th>Status</th>
+        <th>Created</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @documents.each do |document| %>
+        <tr>
+          <td><%= document.title %></td>
+          <td><%= document.document_type.humanize %></td>
+          <td><span class="status <%= document.status %>"><%= document.status.humanize %></span></td>
+          <td><%= document.created_at.strftime("%Y-%m-%d") %></td>
+          <td>
+            <%= link_to "View", document_path(document) %>
+            <%= link_to "Generate PDF", generate_pdf_document_path(document) if document.status == 'generated' || document.status == 'verified' %>
+            <%= link_to "Verify", verify_document_path(document) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+  <% if @documents.empty? %>
+    <p class="empty-state">No documents found. <%= link_to "Create your first document", new_document_path %>.</p>
+  <% end %>
+</div>

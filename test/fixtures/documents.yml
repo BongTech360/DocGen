@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  organization: one
+  user: one
+  document_type: MyString
+  status: MyString
+  title: MyString
+  metadata: 
+  qr_code_data: MyText
+  digital_stamp_data: MyText
+  generated_at: 2026-01-18 15:09:25
+
+two:
+  organization: two
+  user: two
+  document_type: MyString
+  status: MyString
+  title: MyString
+  metadata: 
+  qr_code_data: MyText
+  digital_stamp_data: MyText
+  generated_at: 2026-01-18 15:09:25

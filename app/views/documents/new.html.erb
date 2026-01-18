@@ -1,0 +1,49 @@
+<div class="document-form">
+  <h1>New Document</h1>
+
+  <%= form_with model: @document, local: true do |form| %>
+    <% if @document.errors.any? %>
+      <div class="errors">
+        <h2><%= pluralize(@document.errors.count, "error") %> prohibited this document from being saved:</h2>
+        <ul>
+          <% @document.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :title %>
+      <%= form.text_field :title, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :document_type %>
+      <%= form.select :document_type, 
+          options_for_select([
+            ['Visa', 'visa'],
+            ['Bank Document', 'bank_document'],
+            ['Agreement', 'agreement'],
+            ['Invoice', 'invoice']
+          ], @document.document_type),
+          { prompt: 'Select document type' },
+          { required: true } %>
+    </div>
+
+    <div class="field">
+      <%= form.label :metadata, "Document Data (JSON)" %>
+      <%= form.text_area :metadata, 
+          value: @document.metadata.to_json,
+          placeholder: '{"passport_number": "123456", "visa_type": "Tourist", ...}',
+          rows: 10 %>
+      <small>Enter document-specific data as JSON. For visas: passport_number, visa_type, country, etc.</small>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Create Document", class: "btn btn-primary" %>
+      <%= link_to "Cancel", documents_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+

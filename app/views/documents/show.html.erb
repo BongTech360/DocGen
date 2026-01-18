@@ -1,0 +1,52 @@
+<div class="document-show">
+  <div class="header">
+    <h1><%= @document.title %></h1>
+    <div class="actions">
+      <%= link_to "Edit", edit_document_path(@document), class: "btn btn-secondary" %>
+      <%= link_to "Generate PDF", generate_pdf_document_path(@document), class: "btn btn-primary" %>
+      <%= link_to "Verify", verify_document_path(@document), class: "btn btn-success" %>
+    </div>
+  </div>
+
+  <div class="document-details">
+    <div class="detail-row">
+      <strong>Type:</strong>
+      <span><%= @document.document_type.humanize %></span>
+    </div>
+    <div class="detail-row">
+      <strong>Status:</strong>
+      <span class="status <%= @document.status %>"><%= @document.status.humanize %></span>
+    </div>
+    <div class="detail-row">
+      <strong>Created by:</strong>
+      <span><%= @document.user.email %></span>
+    </div>
+    <div class="detail-row">
+      <strong>Created at:</strong>
+      <span><%= @document.created_at.strftime("%Y-%m-%d %H:%M:%S") %></span>
+    </div>
+    <% if @document.generated_at %>
+      <div class="detail-row">
+        <strong>Generated at:</strong>
+        <span><%= @document.generated_at.strftime("%Y-%m-%d %H:%M:%S") %></span>
+      </div>
+    <% end %>
+  </div>
+
+  <% if @document.metadata.present? %>
+    <div class="metadata">
+      <h2>Document Data</h2>
+      <pre><%= JSON.pretty_generate(@document.metadata) %></pre>
+    </div>
+  <% end %>
+
+  <% if @document.qr_code_data.present? %>
+    <div class="qr-code">
+      <h2>Verification QR Code</h2>
+      <p>Scan this QR code to verify the document:</p>
+      <p><code><%= @document.qr_code_data %></code></p>
+    </div>
+  <% end %>
+
+  <%= link_to "Back to Documents", documents_path, class: "btn btn-link" %>
+</div>

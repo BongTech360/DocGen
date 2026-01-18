@@ -1,0 +1,48 @@
+<div class="document-verify">
+  <h1>Verify Document</h1>
+
+  <% if @verification_data %>
+    <div class="verification-info">
+      <h2>Document Information</h2>
+      <div class="detail-row">
+        <strong>Title:</strong>
+        <span><%= @verification_data[:title] %></span>
+      </div>
+      <div class="detail-row">
+        <strong>Type:</strong>
+        <span><%= @verification_data[:document_type].humanize %></span>
+      </div>
+      <div class="detail-row">
+        <strong>Organization:</strong>
+        <span><%= @verification_data[:organization] %></span>
+      </div>
+      <div class="detail-row">
+        <strong>Generated at:</strong>
+        <span><%= @verification_data[:generated_at]&.strftime("%Y-%m-%d %H:%M:%S") %></span>
+      </div>
+      <div class="detail-row">
+        <strong>Status:</strong>
+        <span class="status <%= @verification_data[:status] %>"><%= @verification_data[:status].humanize %></span>
+      </div>
+    </div>
+
+    <% if @verification_data[:digital_stamp] %>
+      <div class="digital-stamp">
+        <h2>Digital Stamp</h2>
+        <pre><%= JSON.pretty_generate(@verification_data[:digital_stamp]) %></pre>
+      </div>
+    <% end %>
+
+    <% if @document.status != 'verified' %>
+      <%= form_with url: verify_document_path(@document), method: :post, local: true do |form| %>
+        <div class="actions">
+          <%= form.submit "Verify Document", class: "btn btn-success" %>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="verified-message">This document has already been verified.</p>
+    <% end %>
+  <% end %>
+
+  <%= link_to "Back to Document", document_path(@document), class: "btn btn-link" %>
+</div>

@@ -1,0 +1,45 @@
+<div class="organization-form">
+  <h1>New Organization</h1>
+
+  <%= form_with model: @organization, local: true do |form| %>
+    <% if @organization.errors.any? %>
+      <div class="errors">
+        <h2><%= pluralize(@organization.errors.count, "error") %> prohibited this organization from being saved:</h2>
+        <ul>
+          <% @organization.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class="field">
+      <%= form.label :name %>
+      <%= form.text_field :name, required: true %>
+    </div>
+
+    <div class="field">
+      <%= form.label :organization_type %>
+      <%= form.select :organization_type, 
+          options_for_select([
+            ['Visa Agency', 'visa_agency'],
+            ['Bank', 'bank'],
+            ['University', 'university']
+          ], @organization.organization_type),
+          { prompt: 'Select organization type' },
+          { required: true } %>
+    </div>
+
+    <div class="field">
+      <%= form.label :subdomain %>
+      <%= form.text_field :subdomain, required: true, placeholder: 'my-organization' %>
+      <small>Lowercase letters, numbers, and hyphens only. This will be used for your organization's subdomain.</small>
+    </div>
+
+    <div class="actions">
+      <%= form.submit "Create Organization", class: "btn btn-primary" %>
+      <%= link_to "Cancel", root_path, class: "btn btn-secondary" %>
+    </div>
+  <% end %>
+</div>
+

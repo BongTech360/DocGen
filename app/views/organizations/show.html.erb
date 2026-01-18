@@ -1,0 +1,65 @@
+<div class="organization-show">
+  <div class="header">
+    <h1><%= @organization.name %></h1>
+    <%= link_to "Edit", edit_organization_path(@organization), class: "btn btn-secondary" if current_user.organization == @organization %>
+  </div>
+
+  <div class="organization-details">
+    <div class="detail-row">
+      <strong>Type:</strong>
+      <span><%= @organization.organization_type.humanize %></span>
+    </div>
+    <div class="detail-row">
+      <strong>Subdomain:</strong>
+      <span><%= @organization.subdomain %></span>
+    </div>
+  </div>
+
+  <div class="section">
+    <h2>Users (<%= @users.count %>)</h2>
+    <table class="documents-table">
+      <thead>
+        <tr>
+          <th>Email</th>
+          <th>Created</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @users.each do |user| %>
+          <tr>
+            <td><%= user.email %></td>
+            <td><%= user.created_at.strftime("%Y-%m-%d") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="section">
+    <h2>Recent Documents (<%= @documents.count %>)</h2>
+    <table class="documents-table">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Type</th>
+          <th>Status</th>
+          <th>Created</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @documents.each do |document| %>
+          <tr>
+            <td><%= document.title %></td>
+            <td><%= document.document_type.humanize %></td>
+            <td><span class="status <%= document.status %>"><%= document.status.humanize %></span></td>
+            <td><%= document.created_at.strftime("%Y-%m-%d") %></td>
+            <td><%= link_to "View", document_path(document) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+
+  <%= link_to "Back", documents_path, class: "btn btn-link" %>
+</div>

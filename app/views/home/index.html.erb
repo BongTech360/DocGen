@@ -1,0 +1,37 @@
+<div class="home">
+  <div class="hero">
+    <h1>DocGen</h1>
+    <p class="subtitle">Enterprise-grade document generation and management platform</p>
+    <p>Automate the generation and management of visas, bank documents, agreements, and invoices with integrated digital stamping and QR-based verification.</p>
+    
+    <% unless user_signed_in? %>
+      <div class="cta">
+        <%= link_to "Get Started", new_user_registration_path, class: "btn btn-primary btn-large" %>
+        <%= link_to "Sign In", new_user_session_path, class: "btn btn-secondary btn-large" %>
+      </div>
+    <% else %>
+      <div class="cta">
+        <%= link_to "Go to Documents", documents_path, class: "btn btn-primary btn-large" %>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="features">
+    <div class="feature">
+      <h3>Document Types</h3>
+      <p>Support for visas, bank documents, agreements, and invoices</p>
+    </div>
+    <div class="feature">
+      <h3>Digital Stamping</h3>
+      <p>Secure digital stamps with timestamps and verification</p>
+    </div>
+    <div class="feature">
+      <h3>QR Verification</h3>
+      <p>QR code-based document verification system</p>
+    </div>
+    <div class="feature">
+      <h3>Multi-Tenant</h3>
+      <p>Support for multiple organizations (agencies, banks, universities)</p>
+    </div>
+  </div>
+</div>
